@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import Feather from 'react-native-vector-icons/Feather';
 import moment from 'moment';
 import 'moment/locale/ar-ma';
 
@@ -65,7 +65,7 @@ const HomeScreen = ({ navigation }) => {
                     style={styles.iconContainer}
                     activeOpacity={0.5}
                 >
-                    <Icon
+                    <Feather
                         name="menu"
                         size={18}
                         color={COLORS.GRAY}
@@ -76,7 +76,7 @@ const HomeScreen = ({ navigation }) => {
                     style={styles.iconContainer}
                     activeOpacity={0.5}
                 >
-                    <Icon
+                    <Feather
                         name="search"
                         size={18}
                         color={COLORS.GRAY}

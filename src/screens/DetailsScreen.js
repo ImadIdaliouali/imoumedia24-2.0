@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Dimensions, Share, StatusBar } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import Feather from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment';
 import 'moment/locale/ar-ma';
@@ -52,14 +52,14 @@ const DetailsScreen = ({ route, navigation }) => {
             </View>
             <View style={styles.headerContainer}>
                 <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.goBack()}>
-                    <Icon
+                    <Feather
                         name="chevron-left"
                         size={35}
                         color={COLORS.WHITE}
                     />
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={0.5} onPress={() => onShare()}>
-                    <Icon
+                    <Feather
                         name="share"
                         size={28}
                         color={COLORS.WHITE}
