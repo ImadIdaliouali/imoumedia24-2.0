@@ -135,9 +135,8 @@ const HomeScreen = ({ navigation }) => {
                                         image={getImage(item.jetpack_featured_media_url)}
                                         date={moment(item.date).fromNow()}
                                         onPress={() => navigation.navigate("details", {
-                                            postId: item.id,
+                                            post: item,
                                             categories,
-                                            authorId: item.author,
                                         })}
                                     />
                                 );
@@ -165,9 +164,8 @@ const HomeScreen = ({ navigation }) => {
                                     image={getImage(item.jetpack_featured_media_url)}
                                     date={moment(item.date).fromNow()}
                                     onPress={() => navigation.navigate("details", {
-                                        postId: item.id,
+                                        post: item,
                                         categories,
-                                        authorId: item.author,
                                     })}
                                 />
                             );

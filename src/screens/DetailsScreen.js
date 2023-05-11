@@ -3,11 +3,12 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Dimensions
 import Feather from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment';
+import HTMLView from 'react-native-htmlview';
 import 'moment/locale/ar-ma';
 
 import { FONTS, COLORS } from '../constants';
 import { AuthorCard, ItemSeparator } from '../components';
-import { getAuthor, getImage, getPostById } from '../services';
+import { getAuthor, getImage } from '../services';
 
 const { height, width } = Dimensions.get('screen');
 
@@ -15,15 +16,12 @@ const setHight = (h) => (height / 100) * h;
 const setWidth = (w) => (width / 100) * w;
 
 const DetailsScreen = ({ route, navigation }) => {
-    const { postId, categories, authorId } = route.params;
+    const { post, categories } = route.params;
 
-    const [post, setPost] = useState({});
     const [author, setAuthor] = useState({});
 
     useEffect(() => {
-        getPostById(postId)
-            .then(response => setPost(response.data));
-        getAuthor(authorId)
+        getAuthor(post?.author)
             .then(response => setAuthor(response.data));
     }, []);
 
@@ -76,7 +74,10 @@ const DetailsScreen = ({ route, navigation }) => {
             <Text style={styles.categoryText}>{moment(post?.date).fromNow()}</Text>
             <View style={styles.contentContainer}>
                 <Text style={styles.contentTitle}>Content</Text>
-                <Text style={styles.contentText}>{post?.excerpt?.rendered}</Text>
+                <HTMLView
+                    value={post?.excerpt?.rendered}
+                    stylesheet={styles}
+                />
             </View>
             <View>
                 <Text style={styles.authorTitle}>Author</Text>
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
         fontFamily: FONTS.BOLD,
         fontSize: 18,
     },
-    contentText: {
+    p: {
         color: COLORS.TEXT_COLOR,
         paddingVertical: 5,
         fontFamily: FONTS.DroidKufi,
