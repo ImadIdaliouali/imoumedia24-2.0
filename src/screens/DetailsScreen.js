@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Dimensions
 import Feather from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment';
-import HTMLView from 'react-native-htmlview';
+import RenderHtml, { defaultSystemFonts } from 'react-native-render-html';
 import 'moment/locale/ar-ma';
 
 import { FONTS, COLORS } from '../constants';
@@ -14,6 +14,8 @@ const { height, width } = Dimensions.get('screen');
 
 const setHight = (h) => (height / 100) * h;
 const setWidth = (w) => (width / 100) * w;
+
+const systemFonts = [...defaultSystemFonts, FONTS.DroidKufi];
 
 const DetailsScreen = ({ route, navigation }) => {
     const { post, categories } = route.params;
@@ -74,9 +76,11 @@ const DetailsScreen = ({ route, navigation }) => {
             <Text style={styles.categoryText}>{moment(post?.date).fromNow()}</Text>
             <View style={styles.contentContainer}>
                 <Text style={styles.contentTitle}>Content</Text>
-                <HTMLView
-                    value={post?.excerpt?.rendered}
-                    stylesheet={styles}
+                <RenderHtml
+                    contentWidth={width}
+                    source={{ html: post?.excerpt?.rendered }}
+                    tagsStyles={tagsStyle}
+                    systemFonts={systemFonts}
                 />
             </View>
             <View>
@@ -90,6 +94,15 @@ const DetailsScreen = ({ route, navigation }) => {
         </ScrollView>
     );
 }
+
+const tagsStyle = {
+    p: {
+        color: COLORS.TEXT_COLOR,
+        fontFamily: FONTS.DroidKufi,
+        fontSize: 13,
+        textAlign: "justify",
+    },
+};
 
 const styles = StyleSheet.create({
     linearGradient: {
@@ -151,13 +164,6 @@ const styles = StyleSheet.create({
         color: COLORS.BLACK,
         fontFamily: FONTS.BOLD,
         fontSize: 18,
-    },
-    p: {
-        color: COLORS.TEXT_COLOR,
-        paddingVertical: 5,
-        fontFamily: FONTS.DroidKufi,
-        fontSize: 13,
-        textAlign: "justify",
     },
     authorTitle: {
         marginLeft: 20,
