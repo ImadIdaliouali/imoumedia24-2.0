@@ -68,7 +68,12 @@ const DetailsScreen = ({ route, navigation }) => {
             </View>
             <ItemSeparator height={setHight(37)} />
             <View style={styles.postTitleContainer}>
-                <Text style={styles.postTitle}>{post?.title?.rendered}</Text>
+                <RenderHtml
+                    contentWidth={width}
+                    source={{ html: post?.title?.rendered }}
+                    baseStyle={styles.postTitle}
+                    systemFonts={systemFonts}
+                />
             </View>
             <Text style={styles.categoryText}>
                 {post?.categories?.map(id => categories?.find(category => category.id === id)?.name)?.join(", ")}

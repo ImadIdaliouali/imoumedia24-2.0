@@ -67,7 +67,7 @@ const HomeScreen = ({ navigation }) => {
                 >
                     <Feather
                         name="menu"
-                        size={18}
+                        size={19}
                         color={COLORS.GRAY}
                     />
                 </TouchableOpacity>
@@ -78,7 +78,7 @@ const HomeScreen = ({ navigation }) => {
                 >
                     <Feather
                         name="search"
-                        size={18}
+                        size={19}
                         color={COLORS.GRAY}
                     />
                 </TouchableOpacity>

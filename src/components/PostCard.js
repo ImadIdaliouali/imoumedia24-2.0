@@ -2,8 +2,11 @@ import React from 'react';
 import { StyleSheet, Text, View, ImageBackground, TouchableOpacity, Dimensions } from 'react-native';
 
 import { FONTS, COLORS } from '../constants';
+import RenderHTML, { defaultSystemFonts } from 'react-native-render-html';
 
 const { width } = Dimensions.get("screen");
+
+const systemFonts = [...defaultSystemFonts, FONTS.DroidKufi];
 
 const PostCard = ({ title, category, image, date, onPress }) => {
     return (
@@ -23,7 +26,12 @@ const PostCard = ({ title, category, image, date, onPress }) => {
                         </View>
                     </View>
                     <View style={styles.titleContainer}>
-                        <Text style={styles.titleText} numberOfLines={2}>{title}</Text>
+                        <RenderHTML
+                            contentWidth={width}
+                            source={{ html: title }}
+                            baseStyle={styles.titleText}
+                            systemFonts={systemFonts}
+                        />
                     </View>
                 </View>
             </ImageBackground>
