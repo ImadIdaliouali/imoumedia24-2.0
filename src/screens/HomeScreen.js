@@ -5,7 +5,7 @@ import moment from 'moment';
 import 'moment/locale/ar-ma';
 
 import { FONTS, COLORS } from '../constants';
-import { CategoryCard, PostCard, ItemSeparator, LoadingComponent } from '../components';
+import { CategoryCard, PostCard, ItemSeparator, LoadingComponent, NetworkAlert } from '../components';
 import { getCategories, getPosts, getImage } from '../services';
 
 const HomeScreen = ({ navigation }) => {
@@ -23,7 +23,7 @@ const HomeScreen = ({ navigation }) => {
         setIsLoadingRecentPosts(true);
         getPosts()
             .then(response => setRecentPosts(response.data))
-            .catch(error => alert(error))
+            .catch(error => console.error(error))
             .finally(() => setIsLoadingRecentPosts(false));
     }, []);
 
@@ -40,7 +40,7 @@ const HomeScreen = ({ navigation }) => {
         setIsLoading(true);
         getPosts(currentPage, activeCategory >= 0 ? activeCategory : null)
             .then(response => setPosts([...posts, ...response.data]))
-            .catch(error => alert(error))
+            .catch(error => console.error(error))
             .finally(() => setIsLoading(false));
     }
 
@@ -176,6 +176,7 @@ const HomeScreen = ({ navigation }) => {
                     />
                 </View>
             </ScrollView>
+            <NetworkAlert />
         </View>
     );
 }

@@ -7,7 +7,7 @@ import RenderHtml, { defaultSystemFonts } from 'react-native-render-html';
 import 'moment/locale/ar-ma';
 
 import { FONTS, COLORS } from '../constants';
-import { AuthorCard, ItemSeparator } from '../components';
+import { AuthorCard, ItemSeparator, NetworkAlert } from '../components';
 import { getAuthor, getImage } from '../services';
 
 const { height, width } = Dimensions.get('screen');
@@ -96,6 +96,7 @@ const DetailsScreen = ({ route, navigation }) => {
                     />
                 </View>
             </View>
+            <NetworkAlert />
         </ScrollView>
     );
 }
