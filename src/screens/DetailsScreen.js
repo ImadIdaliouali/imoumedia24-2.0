@@ -38,11 +38,6 @@ const DetailsScreen = ({ route, navigation }) => {
             <StatusBar
                 barStyle="dark-content"
             />
-            <LinearGradient
-                colors={["rgba(0, 0, 0, 0.5)", "rgba(217, 217, 217, 0)"]}
-                start={{ x: 0, y: 0.3 }}
-                style={styles.linearGradient}
-            />
             <View style={styles.imageContainer}>
                 <Image
                     style={styles.image}
@@ -50,6 +45,10 @@ const DetailsScreen = ({ route, navigation }) => {
                     source={{ uri: getImage(post?.jetpack_featured_media_url) }}
                 />
             </View>
+            <LinearGradient
+                colors={["rgba(0, 0, 0, 0.5)", "rgba(217, 217, 217, 0)"]}
+                style={styles.linearGradient}
+            />
             <View style={styles.headerContainer}>
                 <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.goBack()}>
                     <Feather
@@ -113,7 +112,7 @@ const tagsStyle = {
 const styles = StyleSheet.create({
     linearGradient: {
         width: setWidth(100),
-        height: setHight(6),
+        height: setHight(8),
         position: "absolute",
         top: 0,
         elevation: 9,
