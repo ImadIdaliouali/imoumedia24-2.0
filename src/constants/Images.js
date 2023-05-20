@@ -1,3 +1,3 @@
 export default {
-    USER_IMAGE: require('../../assets/images/user.jpg'),
-}
+  USER_IMAGE: require('../../assets/images/user.jpg'),
+};
