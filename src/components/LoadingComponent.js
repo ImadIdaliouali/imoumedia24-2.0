@@ -1,12 +1,11 @@
 import React from 'react';
-import {ActivityIndicator, StyleSheet, View} from 'react-native';
-
-import {COLORS} from '../constants';
+import {StyleSheet, View} from 'react-native';
+import {Button} from '@react-native-material/core';
 
 const LoadingComponent = () => {
   return (
     <View style={styles.container}>
-      <ActivityIndicator size={'large'} color={COLORS.ACTIVE} />
+      <Button title="Loading" loading disabled />
     </View>
   );
 };

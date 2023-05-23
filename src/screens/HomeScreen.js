@@ -9,8 +9,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Feather from 'react-native-vector-icons/Feather';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {AppBar, IconButton} from '@react-native-material/core';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment';
 import 'moment/locale/ar-ma';
 
@@ -78,37 +79,27 @@ const HomeScreen = ({navigation}) => {
         barStyle="dark-content"
         backgroundColor={COLORS.BASIC_BACKGROUND}
       />
-      <View style={styles.appBarContainer}>
-        <TouchableOpacity style={styles.iconContainer} activeOpacity={0.5}>
-          <Feather name="menu" size={19} color={COLORS.GRAY} />
-        </TouchableOpacity>
-        <Text style={styles.appName}>imoumedia24</Text>
-        <TouchableOpacity
-          style={styles.iconContainer}
-          activeOpacity={0.5}
-          onPress={() => navigation.navigate('favorite', {categories})}>
-          <Feather name="heart" size={19} color={COLORS.GRAY} />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.categoryListContainer}>
-        <FlatList
-          data={categories}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={item => item.id}
-          ItemSeparatorComponent={() => <ItemSeparator width={20} />}
-          ListHeaderComponent={() => <ItemSeparator width={20} />}
-          ListFooterComponent={() => <ItemSeparator width={20} />}
-          renderItem={({item}) => (
-            <CategoryCard
-              categoryId={item.id}
-              categoryName={item.name}
-              active={item.id === activeCategory}
-              onPress={setActiveCategory}
-            />
-          )}
-        />
-      </View>
+      <AppBar
+        title={() => <Text style={styles.appName}>imoumedia24</Text>}
+        centerTitle
+        color={COLORS.BASIC_BACKGROUND}
+        tintColor={COLORS.GRAY}
+        leading={props => (
+          <IconButton
+            icon={props => <MaterialCommunityIcons name="menu" {...props} />}
+            onPress={() => console.log('open Menu')}
+            {...props}
+          />
+        )}
+        trailing={props => (
+          <IconButton
+            icon={props => <MaterialIcons name="star-border" {...props} />}
+            onPress={() => navigation.navigate('favorite', {categories})}
+            {...props}
+          />
+        )}
+      />
+      <NetworkAlert />
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -118,6 +109,25 @@ const HomeScreen = ({navigation}) => {
             colors={[COLORS.ACTIVE]}
           />
         }>
+        <View style={styles.categoryListContainer}>
+          <FlatList
+            data={categories}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={item => item.id}
+            ItemSeparatorComponent={() => <ItemSeparator width={20} />}
+            ListHeaderComponent={() => <ItemSeparator width={20} />}
+            ListFooterComponent={() => <ItemSeparator width={20} />}
+            renderItem={({item}) => (
+              <CategoryCard
+                categoryId={item.id}
+                categoryName={item.name}
+                active={item.id === activeCategory}
+                onPress={setActiveCategory}
+              />
+            )}
+          />
+        </View>
         <View style={styles.headerContainer}>
           <Text style={styles.headerTitle}>Recent News</Text>
           <TouchableOpacity activeOpacity={0.8}>
@@ -149,6 +159,7 @@ const HomeScreen = ({navigation}) => {
                     onPress={() =>
                       navigation.navigate('details', {
                         post: item,
+                        category,
                         categories,
                       })
                     }
@@ -182,6 +193,7 @@ const HomeScreen = ({navigation}) => {
                   onPress={() =>
                     navigation.navigate('details', {
                       post: item,
+                      category,
                       categories,
                     })
                   }
@@ -196,7 +208,6 @@ const HomeScreen = ({navigation}) => {
           />
         </View>
       </ScrollView>
-      <NetworkAlert />
     </View>
   );
 };
@@ -213,12 +224,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 16,
     paddingVertical: 10,
-  },
-  iconContainer: {
-    padding: 12,
-    borderRadius: 10,
-    backgroundColor: COLORS.LIGHT_GRAY,
-    elevation: 3,
   },
   appName: {
     fontSize: 24,
@@ -246,7 +251,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   categoryListContainer: {
-    paddingVertical: 10,
+    paddingTop: 10,
   },
 });
 

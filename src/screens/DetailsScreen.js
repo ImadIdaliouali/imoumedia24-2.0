@@ -4,14 +4,14 @@ import {
   Text,
   View,
   ScrollView,
-  TouchableOpacity,
   Image,
   Dimensions,
   Share,
   StatusBar,
 } from 'react-native';
+import {AppBar, HStack, IconButton} from '@react-native-material/core';
 import Feather from 'react-native-vector-icons/Feather';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import LinearGradient from 'react-native-linear-gradient';
 import RenderHtml, {defaultSystemFonts} from 'react-native-render-html';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -31,7 +31,7 @@ const setWidth = w => (width / 100) * w;
 const systemFonts = [...defaultSystemFonts, FONTS.DroidKufi];
 
 const DetailsScreen = ({route, navigation}) => {
-  const {post, categories} = route.params;
+  const {post, category, categories} = route.params;
 
   const [author, setAuthor] = useState(null);
   const [liked, setLiked] = useState(false);
@@ -73,7 +73,9 @@ const DetailsScreen = ({route, navigation}) => {
       setLiked(prevState => !prevState);
       await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
       Snackbar.show({
-        text: liked ? 'Post added to favorites' : 'Post removed from favorites',
+        text: !liked
+          ? 'Post added to favorites'
+          : 'Post removed from favorites',
         duration: Snackbar.LENGTH_LONG,
         action: {
           text: 'UNDO',
@@ -89,6 +91,46 @@ const DetailsScreen = ({route, navigation}) => {
   return (
     <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
       <StatusBar barStyle="dark-content" />
+      <AppBar
+        title={() => <Text style={styles.headerName}>{category}</Text>}
+        centerTitle
+        transparent
+        tintColor={COLORS.WHITE}
+        leading={props => (
+          <IconButton
+            icon={props => <Feather name="chevron-left" {...props} size={30} />}
+            onPress={() => navigation.goBack()}
+            {...props}
+          />
+        )}
+        trailing={props => (
+          <HStack>
+            <IconButton
+              icon={props => (
+                <AntDesign
+                  name={liked ? 'heart' : 'hearto'}
+                  onPress={() => addToFavorites()}
+                  {...props}
+                  size={24}
+                  color={liked ? COLORS.HEART : COLORS.WHITE}
+                />
+              )}
+              {...props}
+            />
+            <IconButton
+              icon={props => (
+                <Feather
+                  name="share"
+                  size={28}
+                  onPress={() => onShare()}
+                  {...props}
+                />
+              )}
+              {...props}
+            />
+          </HStack>
+        )}
+      />
       <View style={styles.imageContainer}>
         <Image
           style={styles.image}
@@ -100,24 +142,8 @@ const DetailsScreen = ({route, navigation}) => {
         colors={['rgba(0, 0, 0, 0.5)', 'rgba(217, 217, 217, 0)']}
         style={styles.linearGradient}
       />
-      <View style={styles.headerContainer}>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={() => navigation.goBack()}>
-          <Feather name="chevron-left" size={35} color={COLORS.WHITE} />
-        </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.5} onPress={() => addToFavorites()}>
-          <MaterialIcons
-            name={liked ? 'favorite' : 'favorite-outline'}
-            size={28}
-            color={liked ? COLORS.HEART : COLORS.WHITE}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.5} onPress={() => onShare()}>
-          <Feather name="share" size={28} color={COLORS.WHITE} />
-        </TouchableOpacity>
-      </View>
-      <ItemSeparator height={setHight(37)} />
+      <ItemSeparator height={setHight(30)} />
+      <NetworkAlert />
       <View style={styles.postTitleContainer}>
         <RenderHtml
           contentWidth={width}
@@ -147,7 +173,6 @@ const DetailsScreen = ({route, navigation}) => {
           <AuthorCard name={author?.name} />
         </View>
       </View>
-      <NetworkAlert />
     </ScrollView>
   );
 };
@@ -169,6 +194,11 @@ const styles = StyleSheet.create({
     top: 0,
     elevation: 9,
   },
+  headerName: {
+    fontFamily: FONTS.DroidKufi,
+    fontSize: 20,
+    color: COLORS.WHITE,
+  },
   imageContainer: {
     height: setHight(35),
     width: setWidth(145),
@@ -185,17 +215,6 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 300,
     width: setWidth(145),
     height: setHight(35),
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    position: 'absolute',
-    right: 0,
-    left: 0,
-    top: 20,
-    elevation: 20,
   },
   postTitleContainer: {
     paddingHorizontal: 20,
