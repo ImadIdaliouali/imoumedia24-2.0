@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {LogBox} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import SplashScreen from 'react-native-splash-screen';
 
 import {HomeScreen, DetailsScreen, FavoriteScreen} from './src/screens';
 
@@ -10,6 +11,7 @@ const Stack = createNativeStackNavigator();
 function App() {
   useEffect(() => {
     LogBox.ignoreAllLogs();
+    SplashScreen.hide();
   }, []);
 
   return (
