@@ -87,14 +87,14 @@ const HomeScreen = ({navigation}) => {
         leading={props => (
           <IconButton
             icon={props => <MaterialCommunityIcons name="menu" {...props} />}
-            onPress={() => console.log('open Menu')}
+            onPress={() => navigation.openDrawer()}
             {...props}
           />
         )}
         trailing={props => (
           <IconButton
             icon={props => <MaterialIcons name="star-border" {...props} />}
-            onPress={() => navigation.navigate('favorite', {categories})}
+            onPress={() => navigation.navigate('Favorite', {categories})}
             {...props}
           />
         )}

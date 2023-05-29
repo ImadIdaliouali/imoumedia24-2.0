@@ -1,12 +1,16 @@
+import 'react-native-gesture-handler';
 import React, {useEffect} from 'react';
 import {LogBox} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import SplashScreen from 'react-native-splash-screen';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import {HomeScreen, DetailsScreen, FavoriteScreen} from './src/screens';
+import {HomeStack} from './src/navigation';
+import {COLORS} from './src/constants';
+import {FavoriteScreen} from './src/screens';
 
-const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
 function App() {
   useEffect(() => {
@@ -16,11 +20,29 @@ function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="home" component={HomeScreen} />
-        <Stack.Screen name="details" component={DetailsScreen} />
-        <Stack.Screen name="favorite" component={FavoriteScreen} />
-      </Stack.Navigator>
+      <Drawer.Navigator
+        screenOptions={{
+          headerShown: false,
+          drawerStyle: {
+            backgroundColor: COLORS.BASIC_BACKGROUND,
+          },
+        }}>
+        <Drawer.Screen
+          name="HomeStack"
+          component={HomeStack}
+          options={{
+            title: 'Home',
+            drawerIcon: () => <MaterialIcons name="home" size={24} />,
+          }}
+        />
+        <Drawer.Screen
+          name="Favorite"
+          component={FavoriteScreen}
+          options={{
+            drawerIcon: () => <MaterialIcons name="favorite" size={24} />,
+          }}
+        />
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
