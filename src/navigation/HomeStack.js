@@ -10,6 +10,7 @@ const HomeStack = () => {
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="home" component={HomeScreen} />
       <Stack.Screen name="details" component={DetailsScreen} />
+      <Stack.Screen name="favorite" component={FavoriteScreen} />
     </Stack.Navigator>
   );
 };

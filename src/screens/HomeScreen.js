@@ -94,7 +94,7 @@ const HomeScreen = ({navigation}) => {
         trailing={props => (
           <IconButton
             icon={props => <MaterialIcons name="star-border" {...props} />}
-            onPress={() => navigation.navigate('Favorite', {categories})}
+            onPress={() => navigation.navigate('favorite', {categories})}
             {...props}
           />
         )}
